@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>小李-Code</title>
+    <link rel="stylesheet" href="../css3/css.css">
+    <script src="../js/jquery-1.8.3.js"></script>
+
+</head>
+<body>
+<h1 align="center">登录页面</h1>
+<table>
+    <tr>
+        <td>手机号</td>
+        <td>
+            <input type="text" id="phone">
+            <input type="button" value="发送验证码" onclick="sendCode()">
+        </td>
+    </tr>
+    <tr>
+        <td>验证码</td>
+        <td>
+            <input type="text" name="code">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="button" value="登录">
+        </td>
+    </tr>
+</table>
+</body>
+<script>
+    //发送验证码
+    function sendCode() {
+        let phone = $("#phone").val();
+        $.ajax({
+            url: "../user/code",
+            type: "post",
+            data: {"phone": phone},
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (res) {
+                if (!res) {
+                    alert("手机号格式不正确！");
+                }
+            }
+        })
+    }
+</script>
+</html>

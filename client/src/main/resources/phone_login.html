@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>小李-Code</title>
+    <link rel="stylesheet" href="../css3/css.css">
+    <script src="../js/jquery-1.8.3.js"></script>
+
+</head>
+<body>
+<h1 align="center">手机号登录页面</h1>
+<table>
+    <tr>
+        <td>手机号</td>
+        <td>
+            <input type="text" id="phone">
+            <input type="button" value="发送验证码" onclick="sendCode()">
+        </td>
+    </tr>
+    <tr>
+        <td>短信验证码</td>
+        <td>
+            <input type="text" id="code">
+        </td>
+    </tr>
+    <tr>
+        <td>图片验证码</td>
+        <td>
+            <input type="text" id="imageCode">
+            <img src="../user/getImageCode" alt="图片加载失败" id="image" onclick="changeImageCode()">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="button" value="登录" onclick="login()">
+        </td>
+    </tr>
+</table>
+</body>
+<script>
+    //点击切换图片
+    function changeImageCode() {
+        $("#image").prop("src", "../user/getImageCode?t=" + new Date().getTime());
+    }
+
+    //发送验证码
+    function sendCode() {
+        let phone = $("#phone").val();
+        $.ajax({
+            url: "../user/code",
+            type: "post",
+            data: {"phone": phone},
+            dataType: "json",
+            success: function (res) {
+                if (res <= 0) {
+                    alert("手机号格式不正确！");
+                }
+            }
+        })
+    }
+
+    //登录
+    function login() {
+        let userReq = {
+            phone: $("#phone").val(),
+            code: $("#code").val(),
+            imageCode: $("#imageCode").val()
+        }
+        userReq = JSON.stringify(userReq);
+        $.ajax({
+            url: "../user/login",
+            type: "post",
+            data: userReq,
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (userRes) {
+                if (userRes) {
+                    alert("登录成功！");
+                } else {
+                    alert("手机号或验证码不正确！");
+                }
+            }
+        })
+    }
+</script>
+</html>

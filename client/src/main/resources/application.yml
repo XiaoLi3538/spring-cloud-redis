@@ -1,0 +1,29 @@
+# 服务器相关
+server:
+  port: 10003
+
+spring:
+  #redis端口号配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  application:
+    name: CLIENT
+  thymeleaf:
+    cache: false
+    prefix: classpath:/
+    suffix: .html
+
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5 # 获取服务列表的周期：5s
+    service-url:
+      defaultZone: http://127.0.0.1:10001/eureka
+jwt:
+  config:
+    key: bwie
+    ttl: 360000
+feign:
+  hystrix:
+    enabled: true

@@ -1,0 +1,12 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: EUREKA
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10001/eureka
+    register-with-eureka: false
+    fetch-registry: false
+
